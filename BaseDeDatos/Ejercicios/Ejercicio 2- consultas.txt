@@ -54,3 +54,79 @@ where codigo_fabricante in(1,3,5);
 # 15
 select nombre from producto
 where nombre like '%Portátil%';
+
+# 1.1
+select fabricante.nombre, count(producto.codigo_fabricante) as 'Cantidad productos' from fabricante
+left join producto on fabricante.codigo = producto.codigo_fabricante
+group by fabricante.nombre;
+
+# 1.1 ALTERNATIVA
+select fabricante.nombre, producto.nombre as 'Nombre producto' from fabricante
+left join producto on fabricante.codigo = producto.codigo_fabricante;
+
+# 1.2
+select fabricante.nombre from fabricante
+left join producto on fabricante.codigo = producto.codigo_fabricante
+where producto.codigo_fabricante is null;
+
+# 2.1
+select * from producto
+where codigo_fabricante = (select codigo from fabricante
+where nombre = 'Lenovo'
+);
+
+# 2.2
+select * from producto
+where precio = (
+	select max(precio) from producto
+	where codigo_fabricante = (
+		select codigo from fabricante
+		where nombre = 'Lenovo'
+	)
+);
+
+# 2.3
+select nombre from producto
+where precio = (
+	select max(precio) from producto
+	where codigo_fabricante = (
+		select codigo from fabricante
+		where nombre = 'Lenovo'
+	)
+);
+
+# 2.4
+select * from producto
+where codigo_fabricante = (
+		select codigo from fabricante
+		where nombre = 'Asus'
+)and precio > (
+	select avg(precio) from producto
+    where codigo_fabricante = (
+		select codigo from fabricante
+		where nombre = 'Asus'
+	)
+);
+
+# 3.1
+select nombre from fabricante
+where codigo in (
+	select distinct codigo_fabricante from producto
+);
+
+# 3.2
+select nombre from fabricante
+where codigo not in (
+	select distinct codigo_fabricante from producto
+);
+
+# 4.1
+select nombre from fabricante
+group by codigo
+having count(*) = (
+	select count(*) from producto
+    where codigo_fabricante = (
+		select codigo from fabricante
+        where nombre = 'Lenovo'
+    )
+) and nombre != 'Lenovo';
