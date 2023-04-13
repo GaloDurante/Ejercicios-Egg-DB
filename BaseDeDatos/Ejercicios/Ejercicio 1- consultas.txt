@@ -1,0 +1,103 @@
+# 1
+select * from empleados;
+
+#2
+select * from departamentos;
+
+#6
+select * from empleados 
+where cargo_emp = 'Secretaria';
+
+#7
+select * from empleados
+order By nombre ;
+
+#8
+select nombre, cargo_emp, sal_emp from empleados
+order By sal_emp asc;
+
+#9
+select e.nombre, d.ciudad from empleados e 
+inner join departamentos d on e.id_depto = d.id_depto
+where d.ciudad = 'Ciudad Real';
+
+#10
+select nombre as 'Nombre', cargo_emp as 'Cargo' from empleados;
+
+#11
+select sal_emp, comision_emp from empleados
+where id_depto = 2000
+order by comision_emp asc;
+
+#12
+select nombre, (sal_emp + comision_emp + 500) as 'Total a pagar' from empleados
+where id_depto = 3000;
+
+#13
+select * from empleados
+where nombre like 'J%';
+
+#14
+select sal_emp, comision_emp, (sal_emp + comision_emp) as 'Salario total', nombre from empleados
+where comision_emp > 1000;
+
+#15
+select sal_emp, comision_emp, (sal_emp + comision_emp) as 'Salario total', nombre from empleados
+where comision_emp = 0;
+
+#16
+select * from empleados
+where comision_emp > sal_emp;
+
+#17
+select * from empleados
+where comision_emp <= (sal_emp * 0.3); 
+
+#18
+select * from empleados
+where nombre not like '%MA%';
+
+#19
+select nombre_depto from departamentos
+where nombre_depto in ('Ventas', 'Investigación', 'Mantenimiento');
+
+#20
+select nombre_depto from departamentos
+where nombre_depto not in ('Ventas', 'Investigación', 'Mantenimiento'); 
+ 
+ #21
+select max(sal_emp) as 'Salario maximo' from empleados;
+
+#22
+select nombre from empleados
+order by nombre desc limit 1;
+
+#23
+select max(sal_emp) as 'Salario maximo', min(sal_emp) as 'Salario minimo',
+(max(sal_emp)-min(sal_emp)) as 'Diferencia de sueldos' from empleados;
+
+#24
+select d.nombre_depto, avg(sal_emp) as 'Salario promedio' from empleados e
+inner join departamentos d on e.id_depto = d.id_depto
+group by d.nombre_depto;
+
+#25
+select d.nombre_depto, count(*) as 'Numero empleados'
+from empleados e inner join departamentos d on e.id_depto = d.id_depto
+group by d.nombre_depto having count(*) > 3;
+
+#26
+select d.nombre_depto from empleados e 
+inner join departamentos d on e.id_depto = d.id_depto
+group by d.nombre_depto
+having count(*) = 0;
+
+#27
+select e.nombre, d.nombre_depto, d.nombre_jefe_depto from empleados e 
+inner join departamentos d on e.id_depto = d.id_depto;
+
+#28
+select e.nombre, e.sal_emp as 'Salario', d.nombre_depto from empleados e 
+join departamentos d on e.id_depto = d.id_depto
+where e.sal_emp >= (select avg(sal_emp) from empleados)
+order by d.nombre_depto;
