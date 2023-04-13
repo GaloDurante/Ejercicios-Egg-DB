@@ -4,6 +4,15 @@ select * from empleados;
 #2
 select * from departamentos;
 
+#3
+select nombre_depto from departamentos;
+
+#4
+select nombre, sal_emp from empleados;
+
+#5
+select comision_emp from empleados;
+
 #6
 select * from empleados 
 where cargo_emp = 'Secretaria';
