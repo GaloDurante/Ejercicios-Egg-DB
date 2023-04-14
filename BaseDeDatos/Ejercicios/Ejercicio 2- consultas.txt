@@ -121,12 +121,15 @@ where codigo not in (
 );
 
 # 4.1
-select nombre from fabricante
-group by codigo
-having count(*) = (
-	select count(*) from producto
-    where codigo_fabricante = (
-		select codigo from fabricante
-        where nombre = 'Lenovo'
-    )
-) and nombre != 'Lenovo';
+select nombre, codigo from fabricante
+where codigo in (
+	select codigo_fabricante from producto
+	group by codigo_fabricante
+	having count(*) = (
+		select count(*) as 'Cantidad' from producto
+		where codigo_fabricante = (
+			select codigo from fabricante
+			where nombre = 'Lenovo'
+		)
+	)
+)and nombre != 'Lenovo';
