@@ -1,0 +1,108 @@
+#1
+select Nombre 
+from jugadores
+order by Nombre asc;
+
+#2
+select Nombre, posicion, peso 
+from jugadores
+where Posicion = 'C'
+and peso > 200;
+
+#3
+select nombre
+from equipos
+order by nombre asc;
+
+#4
+select nombre
+from equipos
+where conferencia = 'East';
+
+#5
+select *
+from equipos
+where ciudad like 'C%'
+order by nombre asc;
+
+#6
+select Nombre_equipo, nombre
+from jugadores
+order by Nombre_equipo asc;
+
+#7
+select Nombre_equipo, nombre
+from jugadores
+where Nombre_equipo = 'Raptors'
+order by nombre;
+
+#8
+select j.nombre, e.puntos_por_partido
+from jugadores j 
+inner join estadisticas e on j.codigo = e.jugador
+where j.nombre = 'Pau Gasol';
+
+#9
+select j.nombre, e.puntos_por_partido, e.temporada
+from jugadores j 
+inner join estadisticas e on j.codigo = e.jugador
+where j.nombre = 'Pau Gasol'
+and e.temporada = '04/05';
+
+#10
+select j.nombre, sum(e.puntos_por_partido) as 'Promedio de puntos en su carrera'
+from jugadores j 
+inner join estadisticas e on j.codigo = e.jugador
+group by j.nombre;
+
+#11
+select e.nombre as 'Equipo', count(j.Nombre_equipo) as 'Cantidad de jugadores'
+from jugadores j 
+inner join equipos e on j.Nombre_equipo = e.nombre
+group by e.nombre;
+
+#12
+select j.nombre, sum(e.puntos_por_partido) as 'Promedio de puntos en su carrera'
+from jugadores j 
+inner join estadisticas e on j.codigo = e.jugador
+group by j.nombre
+order by sum(e.puntos_por_partido) desc
+limit 1;
+
+#13
+select e.nombre as 'Equipo', e.conferencia as 'Conferencia', e.division as 'Division', j.Nombre, j.peso
+from jugadores j 
+inner join equipos e on j.Nombre_equipo = e.nombre
+order by j.peso desc
+limit 1;
+
+#14 y 16
+select e.nombre as 'Equipo', e.division, avg(p.puntos_local + p.puntos_visitante) as 'Media puntos'
+from equipos e
+inner join partidos p on e.nombre = p.equipo_local or e.nombre = p.equipo_visitante
+where e.Division = 'Pacific'
+group by e.nombre;
+
+#15
+select *, abs(puntos_local - puntos_visitante) as 'Diferencia'
+from partidos
+order by abs(puntos_local - puntos_visitante) desc
+limit 1;
+
+#17
+SELECT equipo_local AS equipo, temporada, SUM(puntos_local) AS puntos_locales, SUM(puntos_visitante) AS puntos_visitantes
+FROM partidos
+GROUP BY equipo_local, temporada
+UNION
+SELECT equipo_visitante AS equipo, temporada, SUM(puntos_visitante) AS puntos_visitantes, SUM(puntos_local) AS puntos_locales
+FROM partidos
+GROUP BY equipo_visitante, temporada;
+
+#18
+SELECT codigo, equipo_local, equipo_visitante,
+    CASE
+        WHEN puntos_local > puntos_visitante THEN equipo_local
+        WHEN puntos_local < puntos_visitante THEN equipo_visitante
+        ELSE NULL
+    END AS equipo_ganador
+FROM partidos;
