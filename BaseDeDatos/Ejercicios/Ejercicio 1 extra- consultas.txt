@@ -92,11 +92,7 @@ limit 1;
 #17
 SELECT equipo_local AS equipo, temporada, SUM(puntos_local) AS puntos_locales, SUM(puntos_visitante) AS puntos_visitantes
 FROM partidos
-GROUP BY equipo_local, temporada
-UNION
-SELECT equipo_visitante AS equipo, temporada, SUM(puntos_visitante) AS puntos_visitantes, SUM(puntos_local) AS puntos_locales
-FROM partidos
-GROUP BY equipo_visitante, temporada;
+GROUP BY equipo_local, temporada;
 
 #18
 SELECT codigo, equipo_local, equipo_visitante,
