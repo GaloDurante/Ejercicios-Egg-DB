@@ -1,0 +1,72 @@
+h1{
+    color: lightseagreen;
+}
+
+#b-1 {
+    color: red;
+}
+
+#b-2 {
+    color: yellow;
+}
+
+h2 {
+    color: blue;
+}
+
+#a-1{
+    color: red;
+}
+
+#b-a{
+    color: blue;
+}
+
+#b-3{
+    color: blueviolet;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+#tr-1{
+    color: orange;
+}
+
+#tr-2{
+    color: green;
+}
+
+#tr-2 b{
+    color: orange;
+}
+
+#tr-3{
+    color: green;
+}
+
+#tr-3 b{
+    color: red;
+}
+
+#tr-3 #b-4{
+    color: orange;
+}
+
+#tr-4{
+    color: red;
+}
+
+#p-2{
+    color: olive;
+}
+
+#b-5{
+    color: deeppink;
+}
+
+#a-2{
+    color: green;
+}
+
